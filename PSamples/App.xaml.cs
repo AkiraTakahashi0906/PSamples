@@ -20,6 +20,10 @@ namespace PSamples
         {
             containerRegistry.RegisterForNavigation<ViewA>();//ナビゲーション表示
             containerRegistry.RegisterDialog<ViewB,ViewBViewModel>();
+            containerRegistry.RegisterForNavigation<ViewC>();//ナビゲーション表示
+
+            containerRegistry.RegisterSingleton<MainWindowViewModel>();//シングルトン　子画面からメイン画面にアクセス
+
         }
     }
 }

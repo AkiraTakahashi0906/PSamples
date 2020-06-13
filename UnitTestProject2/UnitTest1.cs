@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Prism.Services.Dialogs;
+using PSamples.Services;
 using PSamples.ViewModels;
 
 namespace UnitTestProject2
@@ -16,15 +17,38 @@ namespace UnitTestProject2
             var vm = new ViewAViewModel(mock.Object);
 
             mock.Setup(x => x.ShowDialog(
-                It.IsAny<string>(),
-                It.IsAny<IDialogParameters>(),
-                It.IsAny<Action<IDialogResult>>()
+                It.IsAny<string>(),//引数1
+                It.IsAny<IDialogParameters>(),//引数2
+                It.IsAny<Action<IDialogResult>>()//引数3
                 )).Callback<string, IDialogParameters, Action<IDialogResult>>
                 ((viewName, p, result) =>
                 {
                     Assert.AreEqual("ViewB", viewName);
                 });
             vm.OKButton.Execute();
+        }
+
+        [TestMethod]
+        public void TestMethod2()
+        {
+            var dialogService = new Mock<IDialogService>();
+            var messageService = new Mock<IMessageService>();
+
+            //テストプロジェクトにもwpf系を入れておくと参照に入る
+            messageService.Setup(x => x.Question("Saveしますか？")).Returns(System.Windows.MessageBoxResult.OK);
+
+            var vm = new ViewAViewModel(dialogService.Object, messageService.Object);
+
+            messageService.Setup(x => x.ShowDialog(
+                It.IsAny<string>()
+                )).Callback<string>
+                (message =>
+                {
+                    Assert.AreEqual("Saveしました", message);
+                });
+
+            vm.OKButton2.Execute();
+            messageService.VerifyAll();
         }
     }
 }

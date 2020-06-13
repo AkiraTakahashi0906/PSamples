@@ -11,10 +11,18 @@ namespace PSamples.ViewModels
         private IRegionManager _regionManager;
         private IDialogService _dialogService;
         private string _title = "PSamples Application";
+
         public string Title
         {
             get { return _title; }
             set { SetProperty(ref _title, value); }
+        }
+
+        private bool _buttonEnabled = false;
+        public bool ButtonEnabled
+        {
+            get { return _buttonEnabled; }
+            set { SetProperty(ref _buttonEnabled, value); }
         }
 
         public MainWindowViewModel(IRegionManager regionManager,
@@ -23,9 +31,10 @@ namespace PSamples.ViewModels
             _regionManager = regionManager;
             _dialogService = dialogService;
             SystemDateUpdateButton = new DelegateCommand(SystemDateUpdateButtonExecute);
-            ShowViewAButton = new DelegateCommand(ShowViewAButtonExecute);
+            ShowViewAButton = new DelegateCommand(ShowViewAButtonExecute).ObservesCanExecute(()=>ButtonEnabled);
             ShowViewPButton= new DelegateCommand(ShowViewPButtonExecute);
             ShowViewBButton = new DelegateCommand(ShowViewBButtonExecute);
+            ShowViewCButton = new DelegateCommand(ShowViewCButtonExecute);
         }
 
         private string _systemDateLabel = System.DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
@@ -39,9 +48,11 @@ namespace PSamples.ViewModels
         public DelegateCommand ShowViewAButton { get; }
         public DelegateCommand ShowViewPButton { get; }
         public DelegateCommand ShowViewBButton { get; }
+        public DelegateCommand ShowViewCButton { get; }
 
         private void SystemDateUpdateButtonExecute()
         {
+            ButtonEnabled = true;
             SystemDateLabel= System.DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
         }
 
@@ -62,6 +73,11 @@ namespace PSamples.ViewModels
             var p = new DialogParameters();
             p.Add(nameof(ViewBViewModel.ViewBTextBox),SystemDateLabel);
             _dialogService.ShowDialog(nameof(ViewB), p, ViewBClose);
+        }
+
+        private void ShowViewCButtonExecute()
+        {
+            _regionManager.RequestNavigate("ContentRegion", nameof(ViewC));
         }
 
         private void ViewBClose(IDialogResult dialogResult)

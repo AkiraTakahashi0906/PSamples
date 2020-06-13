@@ -3,8 +3,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:prism="http://prismlibrary.com/"
         prism:ViewModelLocator.AutoWireViewModel="True"
-        Title="{Binding Title}" Height="350" Width="525"
+        Title="{Binding Title}" Height="450" Width="525"
         WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolVisibilityConverter"/>
+    </Window.Resources>
     <Grid>
         <StackPanel>
             <Label Content="システム日時"/>
@@ -17,6 +20,9 @@
                     Command="{Binding ShowViewPButton}"/>
             <Button Content="show view b"
                     Command="{Binding ShowViewBButton}"/>
+            <Button Content="show view c ListBox combobox"
+                    Command="{Binding ShowViewCButton}"/>
+            <Button Content="VVVVVVV" Visibility="{Binding ButtonEnabled,Converter={StaticResource BoolVisibilityConverter}}"/>
             <ContentControl prism:RegionManager.RegionName="ContentRegion" />
         </StackPanel>
     </Grid>

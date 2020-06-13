@@ -63,9 +63,9 @@ namespace PSamples.ViewModels
         private void OKButton2Execute()
         {
             //MessageBox.Show("SAVE");
-            if (_messageService.Question("SAVEしますか？") == MessageBoxResult.OK)
+            if (_messageService.Question("Saveしますか？") == MessageBoxResult.OK)
             {
-                _messageService.ShowDialog("SAVEしました");
+                _messageService.ShowDialog("Saveしました");
             }
         }
 

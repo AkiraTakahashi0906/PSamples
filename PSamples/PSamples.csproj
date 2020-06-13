@@ -59,13 +59,18 @@
     </ApplicationDefinition>
     <Compile Include="Services\IMessageService.cs" />
     <Compile Include="Services\MessageService.cs" />
+    <Compile Include="ViewModels\ComboBoxViewModel.cs" />
     <Compile Include="ViewModels\ViewAViewModel.cs" />
     <Compile Include="ViewModels\ViewBViewModel.cs" />
+    <Compile Include="ViewModels\ViewCViewModel.cs" />
     <Compile Include="Views\ViewA.xaml.cs">
       <DependentUpon>ViewA.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ViewB.xaml.cs">
       <DependentUpon>ViewB.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewC.xaml.cs">
+      <DependentUpon>ViewC.xaml</DependentUpon>
     </Compile>
     <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -85,6 +90,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ViewB.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
